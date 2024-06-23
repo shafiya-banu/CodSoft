@@ -1,0 +1,82 @@
+package codsoft;
+import java.util.Random;
+import java.util.Scanner;
+
+public class NumberGuessingGame {
+    private NumberRange numberRange;
+    private Scanner scanner;
+    
+    private static final int max_attempts= 10;
+    public NumberGuessingGame() {
+        numberRange = new NumberRange();
+        scanner = new Scanner(System.in);
+    }
+
+    public void startGame(int min, int max) {
+        int randomNumber = numberRange.generateRandomNumber(min, max);
+        int attempts = 0;
+        boolean guessedCorrectly = false;
+
+        while (attempts < max_attempts) {
+            System.out.print("Guess a number between " + min + " and " + max + ": ");
+            int userGuess = scanner.nextInt();
+            scanner.nextLine(); 
+            attempts++;
+
+            if (userGuess > randomNumber) {
+                System.out.println("Too high!");
+            } else if (userGuess < randomNumber) {
+                System.out.println("Too low!");
+            } else {
+                System.out.println("Correct guess!");
+                guessedCorrectly = true;
+                break;
+            }
+        }
+
+        if (!guessedCorrectly) {
+            System.out.println("Sorry, you've used all your attempts! The correct number was " + randomNumber);
+        }
+
+        System.out.println("Total attempts: " + attempts);
+    }
+
+   
+    class NumberRange {
+        private Random random;
+
+        public NumberRange() {
+            random = new Random();
+        }
+
+        public int generateRandomNumber(int min, int max) {
+            
+            return random.nextInt(max - min + 1) + min;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        NumberGuessingGame game = new NumberGuessingGame();
+
+        while (true) {
+            System.out.println("Welcome to the Number Guessing Game!");
+            System.out.print("Enter the minimum number: ");
+            int minNumber = scanner.nextInt();
+            System.out.print("Enter the maximum number: ");
+            int maxNumber = scanner.nextInt();
+            scanner.nextLine(); 
+
+            game.startGame(minNumber, maxNumber);
+
+            System.out.print("Do you want to play again?yes/no ");
+            String playAgain = scanner.nextLine();
+            if (!playAgain.equalsIgnoreCase("yes")) {
+                break;
+            }
+        }
+
+        scanner.close();
+        System.out.println("Thanks for playing!");
+    }
+}
