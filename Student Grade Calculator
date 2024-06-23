@@ -1,0 +1,60 @@
+package codsoft;
+import java.util.Scanner;
+public class GradeCalculator {
+    public static void main(String[] args) {
+      Scanner sc = new Scanner(System.in);
+      StudentGrade sg = new StudentGrade();
+
+      System.out.println("....Student Grade Calculator.....");
+      System.out.println("Enter the number of subjects:");
+
+      int numberOfSubjects = sc.nextInt();
+      int[] marks = new int[numberOfSubjects];
+
+      System.out.println("Enter the marks obtained in " + numberOfSubjects + " subjects respectively:");
+
+      for (int i = 0; i < numberOfSubjects; i++) {
+          marks[i] = sc.nextInt();
+      }
+
+      int totalMarks = sg.calculateTotalMarks(marks);
+      double averagePercentage = sg.calculateAveragePercentage(totalMarks, numberOfSubjects);
+      String grade = sg.calculateGrade(averagePercentage);
+
+      System.out.println("Total Marks: " + totalMarks);
+      System.out.println("Average Percentage: " + averagePercentage + "%");
+      System.out.println("Grade: " + grade);
+  }
+}
+    class StudentGrade {
+
+    public int calculateTotalMarks(int[] marks) {
+        int total = 0;
+        for (int mark : marks) {
+            total += mark;
+        }
+        return total;
+    }
+
+    public double calculateAveragePercentage(int totalMarks, int numberOfSubjects) {
+        return (double) totalMarks / numberOfSubjects;
+    }
+
+    public String calculateGrade(double averagePercentage) {
+        if (averagePercentage >= 90) {
+            return "A+";
+        } else if (averagePercentage >= 80) {
+            return "A";
+        } else if (averagePercentage >= 70) {
+            return "B";
+        } else if (averagePercentage >= 60) {
+            return "C";
+        } else if (averagePercentage >= 50) {
+            return "D";
+        } else if (averagePercentage >= 40) {
+            return "E";
+        } else {
+            return "Fail (F)";
+        }
+    }
+ }
